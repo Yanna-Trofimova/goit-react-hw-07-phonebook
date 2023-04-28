@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 import { contactApi } from './items'
 // import { filterSlice, filtersReducer } from './filter'
 // import { contactsReducer, contactsSlice } from './items'
