@@ -12,11 +12,9 @@ import { Audio } from 'react-loader-spinner';
 const ContactList = () => {
 
     const [deleteContact, array] = useDeleteContactMutation()
-console.log(array)
+
     const filterContact = useSelector(getFilterContacts)
     
-    
-
     const { isLoading, data: items, isError } = useFetchContactsQuery()
 
     
@@ -25,10 +23,8 @@ console.log(array)
         )
         : items;
     
-    // const deleting = 
-    //     toast.success('Контакт видалено')
-    // }
-        
+  console.log(useFetchContactsQuery())
+    
     return (   
         <>
              {isLoading && (<h2>loading...</h2>)}
@@ -41,8 +37,8 @@ console.log(array)
                         <button
                             type="button"
                             className={css.contactBtn}
-                                 onClick={() => (deleteContact(id),
-                                     toast.success('Контакт видалено'))}
+                                 onClick={() => deleteContact(id)&&
+                                     toast.success('Контакт видалено')}
                         >
                                  Удалить
                                  {array.isLoading && ( <Audio
@@ -51,8 +47,8 @@ console.log(array)
                                             radius="9"
                                             color="green"
                                             ariaLabel="loading"
-                                            wrapperStyle
-                                            wrapperClass
+                                            // wrapperStyle
+                                            // wrapperClass
                                             /> )}
                         </button>
 

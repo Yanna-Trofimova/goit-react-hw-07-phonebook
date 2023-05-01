@@ -3,15 +3,7 @@ import css from './ContactForm.module.css';
 import toast from 'react-hot-toast';
 
 import { Audio } from 'react-loader-spinner';
-// {/* <Audio
-//   height="80"
-//   width="80"
-//   radius="9"
-//   color="green"
-//   ariaLabel="loading"
-//   wrapperStyle
-//   wrapperClass
-// /> */}
+
 
 
 
@@ -25,7 +17,7 @@ export const ContactForm = ({
     const { data: items} = useFetchContactsQuery()
 
     const [AddContact, { isLoading }] = useAddContactMutation();
-// console.log(isLoading)
+
     const handelAddContact = async (values) => {
         try {
             await AddContact(values);
@@ -65,18 +57,9 @@ export const ContactForm = ({
                                             radius="9"
                                             color="green"
                                             ariaLabel="loading"
-                                            wrapperStyle
-                                            wrapperClass
+                                            // wrapperStyle
+                                            // wrapperClass
                                             /> )}
-                            {/* <Audio
-                                            height="20"
-                                            width="20"
-                                            radius="9"
-                                            color="green"
-                                            ariaLabel="loading"
-                                            wrapperStyle
-                                            wrapperClass
-                                            />  */}
                         </button>
                     </Form>
                 )}
