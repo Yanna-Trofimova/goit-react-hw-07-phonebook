@@ -2,16 +2,30 @@ import { Formik, Form, Field } from 'formik';
 import css from './ContactForm.module.css';
 import toast from 'react-hot-toast';
 
+import { Audio } from 'react-loader-spinner';
+// {/* <Audio
+//   height="80"
+//   width="80"
+//   radius="9"
+//   color="green"
+//   ariaLabel="loading"
+//   wrapperStyle
+//   wrapperClass
+// /> */}
 
 
 
-import { useAddContactMutation } from 'redux/items'
+
+import { useAddContactMutation, useFetchContactsQuery } from 'redux/items'
 
 export const ContactForm = ({
     initialValues = { name: '', number: '' }
 }) => {
-    const [AddContact] = useAddContactMutation();
 
+    const { data: items} = useFetchContactsQuery()
+
+    const [AddContact, { isLoading }] = useAddContactMutation();
+// console.log(isLoading)
     const handelAddContact = async (values) => {
         try {
             await AddContact(values);
@@ -23,12 +37,13 @@ export const ContactForm = ({
     }
      
     const handleSubmit = async (values, actions) => {
-            await handelAddContact(values);
-            actions.setSubmitting(false);
-            actions.resetForm();
+         items.find(cont => cont.name.toLowerCase() === values.name.toLowerCase(),) ?
+          alert(`${values.name} is already in contacts.`)
+             : handelAddContact(values) && actions.resetForm();
     }
 
-        return (
+    return (
+        items &&
             <Formik className={css.formOfContact} initialValues={initialValues} onSubmit={handleSubmit}>
                 {({ isSubmitting }) => (
                     <Form>
@@ -43,12 +58,32 @@ export const ContactForm = ({
                         </label>
                         <br />
                         <button className={css.btnContact}  type="submit" disabled={isSubmitting}>
-                           Add contact
+                            Add contact
+                             {isLoading && ( <Audio
+                                            height="20"
+                                            width="20"
+                                            radius="9"
+                                            color="green"
+                                            ariaLabel="loading"
+                                            wrapperStyle
+                                            wrapperClass
+                                            /> )}
+                            {/* <Audio
+                                            height="20"
+                                            width="20"
+                                            radius="9"
+                                            color="green"
+                                            ariaLabel="loading"
+                                            wrapperStyle
+                                            wrapperClass
+                                            />  */}
                         </button>
                     </Form>
                 )}
             </Formik>
         );
 }
+
+
     
 export default ContactForm

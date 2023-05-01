@@ -3,28 +3,31 @@ import css from './ContactList.module.css';
 import {useFetchContactsQuery, useDeleteContactMutation} from 'redux/items'
 import {  useSelector } from "react-redux";
 import { getFilterContacts } from "redux/selectors";
-
+import toast from 'react-hot-toast';
+import { Audio } from 'react-loader-spinner';
 
 
 
 
 const ContactList = () => {
 
-    const [deleteContact,] = useDeleteContactMutation()
-
+    const [deleteContact, array] = useDeleteContactMutation()
+console.log(array)
     const filterContact = useSelector(getFilterContacts)
     
     
 
     const { isLoading, data: items, isError } = useFetchContactsQuery()
+
     
-    
-    const filteredContacts = filterContact
-        ? items.filter(contact =>
+    const filteredContacts = filterContact? items.filter(contact =>
         contact.name.toLowerCase().includes(filterContact.toLowerCase())
         )
         : items;
     
+    // const deleting = 
+    //     toast.success('Контакт видалено')
+    // }
         
     return (   
         <>
@@ -38,9 +41,19 @@ const ContactList = () => {
                         <button
                             type="button"
                             className={css.contactBtn}
-                            onClick={() => deleteContact(id)}
+                                 onClick={() => (deleteContact(id),
+                                     toast.success('Контакт видалено'))}
                         >
-                            Удалить
+                                 Удалить
+                                 {array.isLoading && ( <Audio
+                                            height="15"
+                                            width="10"
+                                            radius="9"
+                                            color="green"
+                                            ariaLabel="loading"
+                                            wrapperStyle
+                                            wrapperClass
+                                            /> )}
                         </button>
 
                     </li>)))}

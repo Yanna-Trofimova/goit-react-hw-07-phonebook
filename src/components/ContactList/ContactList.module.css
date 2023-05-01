@@ -18,8 +18,8 @@
         background-color: rgb(80, 173, 224);
         color: white;
         font-weight: 500;
-           
-        
+        display: flex;
+        align-items: center;
           
 }
 
